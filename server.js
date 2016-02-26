@@ -86,6 +86,15 @@ sio.on('connection', function(socket) {
     socket.visibility = state;
     sio.emit('users:visibility-states', getVisibilityCounts());
   });
+
+  socket.on('message:out', function(msg){
+     console.log("message reçu par le server " + msg);
+    sio.emit('message:in', socket.nickname + " : " + msg);
+  });
+
+  socket.on('move:in', function(x,y){
+    sio.emit('move:out', x,y);
+  });
 });
 
 function getVisibilityCounts() {
